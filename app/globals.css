@@ -1,0 +1,725 @@
+@import '../node_modules/tailwindcss/index.css';
+@import '../node_modules/tw-animate-css/dist/tw-animate.css';
+@import '../node_modules/shadcn/dist/tailwind.css';
+
+/* ---------------------------------------------------------------------------
+   Fonts — self-hosted, swap so text renders immediately.
+--------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/fonts/eb-garamond-400.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/fonts/eb-garamond-500.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/fonts/eb-garamond-600.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/fonts/eb-garamond-500-italic.woff2') format('woff2');
+  font-style: italic;
+  font-weight: 400 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/lato-300.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/lato-400.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/lato-700.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   Brand tokens — ARCHI Grand Design, Edition 01.
+   Forest 40% · Gold 20% · Ivory 30% · Sand 10%. Olive supports depth.
+   `gold-ink` and `gold-soft` are accessible text variants of Heritage Gold
+   for light and dark surfaces respectively.
+--------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-forest: #163829;
+  --color-forest-deep: #0f2a1e;
+  --color-forest-raised: #1e4635;
+  --color-gold: #b6925b;
+  --color-gold-ink: #7f6131;
+  --color-gold-soft: #c9a874;
+  --color-ivory: #fbf9f3;
+  --color-sand: #dcccb1;
+  --color-sand-soft: #f1ebdf;
+  --color-olive: #4a503e;
+  --color-stone: #5e665b;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: 'Lato', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Noto Sans', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Noto Sans Arabic', 'Noto Sans Devanagari', sans-serif;
+  --font-serif: 'EB Garamond', ui-serif, Georgia, 'Songti SC', 'Noto Serif SC', 'Hiragino Mincho ProN', 'Noto Serif JP', 'Noto Serif KR', 'Noto Naskh Arabic', 'Noto Serif Devanagari', serif;
+  --font-heading: var(--font-serif);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+
+  --ease-archi: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --background: #fbf9f3;
+  --foreground: #163829;
+  --card: #ffffff;
+  --card-foreground: #163829;
+  --popover: #ffffff;
+  --popover-foreground: #163829;
+  --primary: #163829;
+  --primary-foreground: #fbf9f3;
+  --secondary: #dcccb1;
+  --secondary-foreground: #163829;
+  --muted: #f1ebdf;
+  --muted-foreground: #5e665b;
+  --accent: #b6925b;
+  --accent-foreground: #163829;
+  --destructive: #9f312f;
+  --border: rgba(22, 56, 41, 0.14);
+  --input: rgba(22, 56, 41, 0.22);
+  --ring: #b6925b;
+  --radius: 0.75rem;
+  --header-height: 76px;
+  --sticky-offset: var(--header-height);
+  /* Page frame: side gutter grows with the screen, content caps at 1480px. */
+  --gutter: 1.25rem;
+  --shell-max: 1480px;
+  /* Brand marquee band; the home hero reserves exactly this much. */
+  --marquee-h: 4.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 2rem;
+    --marquee-h: 5.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --gutter: 3rem;
+  }
+}
+
+html[data-header-hidden='true'] {
+  --sticky-offset: 0px;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-padding-top: calc(var(--header-height) + 24px);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    overflow-x: clip;
+    background: var(--color-ivory);
+    color: var(--color-forest);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  video,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::selection {
+    background: var(--color-sand);
+    color: var(--color-forest);
+  }
+
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Shared building blocks
+--------------------------------------------------------------------------- */
+
+@layer components {
+  .shell {
+    width: min(100% - 2 * var(--gutter), var(--shell-max));
+    margin-inline: auto;
+  }
+
+  /* Sentence-case label with a short gold rule — no shouting capitals. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--color-gold-ink);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+  }
+
+  .eyebrow::before {
+    width: 1.5rem;
+    height: 1px;
+    flex-shrink: 0;
+    content: '';
+    background: currentColor;
+    opacity: 0.6;
+  }
+
+  .eyebrow-light {
+    color: var(--color-gold-soft);
+  }
+
+  .display {
+    font-family: var(--font-serif);
+    font-size: clamp(2.9rem, 7.4vw, 6.75rem);
+    line-height: 0.94;
+    letter-spacing: -0.02em;
+  }
+
+  .headline {
+    font-family: var(--font-serif);
+    font-size: clamp(2.3rem, 4.6vw, 4.1rem);
+    line-height: 1;
+    letter-spacing: -0.015em;
+  }
+
+  .lede {
+    font-size: clamp(1.02rem, 1.3vw, 1.16rem);
+    line-height: 1.7;
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.4rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.005em;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 220ms ease,
+      color 220ms ease,
+      border-color 220ms ease,
+      transform 220ms var(--ease-archi);
+  }
+
+  .btn svg {
+    transition: transform 260ms var(--ease-archi);
+  }
+
+  .btn:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn-forest {
+    background: var(--color-forest);
+    color: var(--color-ivory);
+  }
+
+  .btn-forest:hover {
+    background: var(--color-forest-raised);
+  }
+
+  .btn-sand {
+    background: var(--color-sand);
+    color: var(--color-forest);
+  }
+
+  .btn-sand:hover {
+    background: var(--color-ivory);
+  }
+
+  .btn-outline {
+    border-color: color-mix(in srgb, var(--color-forest) 28%, transparent);
+    color: var(--color-forest);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-forest);
+    background: var(--color-forest);
+    color: var(--color-ivory);
+  }
+
+  .btn-outline-light {
+    border-color: rgb(251 249 243 / 0.34);
+    color: var(--color-ivory);
+  }
+
+  .btn-outline-light:hover {
+    border-color: var(--color-ivory);
+    background: var(--color-ivory);
+    color: var(--color-forest);
+  }
+
+  .link-arrow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 0.35rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .link-arrow::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    background: currentColor;
+    opacity: 0.35;
+    transform-origin: left;
+    transition:
+      opacity 220ms ease,
+      transform 420ms var(--ease-archi);
+  }
+
+  .link-arrow:hover::after {
+    opacity: 1;
+    animation: underline-sweep 520ms var(--ease-archi);
+  }
+
+  .link-arrow svg {
+    transition: transform 260ms var(--ease-archi);
+  }
+
+  .link-arrow:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  .hairline {
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Thin layered wave lines — the primary ARCHI motif. */
+  .wave-lines path {
+    fill: none;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .media-credit {
+    font-size: 0.78rem;
+    font-style: italic;
+    letter-spacing: 0.01em;
+  }
+
+  /* Index numerals (01, 02 …) — the only small-caps-like label we keep. */
+  .numeral {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+  }
+
+  /*
+   * Below-the-fold sections skip layout and paint until they approach the
+   * viewport. Keep off sections that contain anchors or sticky children.
+   */
+  .defer-render {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   CSS-only motion: hero entrances run before hydration, so the largest
+   content paints without waiting for JavaScript.
+--------------------------------------------------------------------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.5em, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes underline-sweep {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes slow-zoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes clip-in {
+  from {
+    clip-path: inset(7% 7% 7% 7% round 22px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 14px);
+  }
+}
+
+@keyframes pulse-ring {
+  from {
+    opacity: 0.9;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+.origin-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+
+@keyframes float-island {
+  50% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.word-rise {
+  display: inline-block;
+  opacity: 0;
+  animation: rise 900ms var(--ease-archi) forwards;
+  animation-delay: calc(var(--intro, 0ms) + var(--i, 0) * 70ms + 80ms);
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fade 900ms ease forwards;
+  animation-delay: calc(var(--intro, 0ms) + var(--delay, 300ms));
+}
+
+.rise-in {
+  opacity: 0;
+  animation: rise 900ms var(--ease-archi) forwards;
+  animation-delay: calc(var(--intro, 0ms) + var(--delay, 200ms));
+}
+
+.draw-in path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 2.2s var(--ease-archi) forwards;
+  animation-delay: calc(var(--intro, 0ms) + var(--delay, 300ms) + var(--i, 0) * 120ms);
+}
+
+.slow-zoom {
+  animation: slow-zoom 2.4s var(--ease-archi) both;
+}
+
+/* Above-the-fold photography: clipped open, never hidden, so LCP is unaffected. */
+.clip-in {
+  animation: clip-in 1.3s var(--ease-archi) both;
+  animation-delay: calc(var(--intro, 0ms) + var(--delay, 150ms));
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+
+
+
+/* ---------------------------------------------------------------------------
+   Opening moment — the ARCHI wordmark is written once per session, then the
+   page lifts in. CSS only; an inline script marks repeat visits (and reduced
+   motion) with html[data-intro='skip'] before first paint.
+--------------------------------------------------------------------------- */
+
+:root {
+  /* Total opening moment ≈ 2.5s: write 1.6s, hold, fade out from 2s. */
+  --intro: 2100ms;
+}
+
+html[data-intro='skip'] {
+  --intro: 0ms;
+}
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--color-forest);
+  animation: intro-out 500ms var(--ease-archi) 2000ms forwards;
+}
+
+html[data-intro='skip'] .intro {
+  display: none;
+}
+
+.intro-mark {
+  position: relative;
+  width: min(68vw, 22rem);
+}
+
+.intro-logo {
+  clip-path: inset(0 100% 0 0);
+  animation: intro-write 1600ms cubic-bezier(0.65, 0, 0.35, 1) 150ms forwards;
+}
+
+.intro-pen {
+  position: absolute;
+  top: 6%;
+  bottom: 30%;
+  left: 0;
+  width: 1px;
+  background: var(--color-gold);
+  opacity: 0;
+  animation: intro-pen 1600ms cubic-bezier(0.65, 0, 0.35, 1) 150ms forwards;
+}
+
+@keyframes intro-write {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes intro-pen {
+  0% {
+    opacity: 1;
+    left: 0;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, -2%, 0);
+  }
+}
+
+/* Synthetic italics look broken in CJK, Arabic and Devanagari scripts. */
+:is(:lang(zh), :lang(ja), :lang(ko), :lang(ar), :lang(hi)) :is(.italic, em) {
+  font-style: normal;
+}
+
+:is(:lang(zh), :lang(ja), :lang(ko)) :is(h1, h2, h3, .display, .headline) {
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+/* Keep phrases whole when lines wrap: Japanese by phrase, Korean by word. */
+:lang(ja) {
+  word-break: auto-phrase;
+}
+
+:lang(ko) {
+  word-break: keep-all;
+}
+
+/* Page enter on client-side navigation only (see app/template.tsx). */
+.page-enter {
+  animation: rise 520ms var(--ease-archi) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .word-rise,
+  .fade-in,
+  .rise-in,
+  .draw-in path,
+  .slow-zoom,
+  .clip-in,
+  .intro-logo,
+  .page-enter {
+    opacity: 1;
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .marquee-track,
+  .origin-pulse {
+    animation: none;
+  }
+
+  .intro {
+    display: none;
+  }
+
+  :root {
+    --intro: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

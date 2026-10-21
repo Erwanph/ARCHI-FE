@@ -1,0 +1,54 @@
+{
+  "bintan-origin": {
+    "width": 1800,
+    "height": 1200,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      1800
+    ]
+  },
+  "hero-bali-rice-fields-poster": {
+    "width": 1260,
+    "height": 709,
+    "widths": [
+      480,
+      800,
+      1200,
+      1260
+    ]
+  },
+  "hero-indonesia-coast": {
+    "width": 2400,
+    "height": 1348,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "kratom": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      480,
+      800,
+      1200,
+      1536
+    ]
+  },
+  "patchouli": {
+    "width": 1600,
+    "height": 1067,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ]
+  }
+}

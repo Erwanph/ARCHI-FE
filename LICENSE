@@ -1,0 +1,17 @@
+Copyright (c) 2026 ARCHI. All rights reserved.
+
+This repository and its contents (source code, text, designs, images, the
+ARCHI name, logo and other brand assets) are proprietary and confidential.
+
+No license is granted to use, copy, modify, merge, publish, distribute,
+sublicense or sell any part of this repository, in whole or in part, without
+prior written permission from ARCHI.
+
+Third-party open-source packages used by this project remain under their own
+licenses, as listed in package.json and package-lock.json. Third-party
+photographs are credited where they are displayed and remain subject to their
+respective licenses.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED. IN NO EVENT SHALL ARCHI BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.
