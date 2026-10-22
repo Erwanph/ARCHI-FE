@@ -73,6 +73,17 @@ export default defineConfig(async () => {
         'use-sync-external-store/shim/with-selector',
       ],
     },
+    build: {
+      rolldownOptions: {
+        output: {
+          // vinext's <Link> lazy-loads its client router and reads
+          // `navigateClientSide` from the chunk by name. With minified
+          // internal export names that name disappears in production and
+          // every navbar link fails ("e is not a function"). Keep the names.
+          minifyInternalExports: false,
+        },
+      },
+    },
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,

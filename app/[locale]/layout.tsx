@@ -135,6 +135,20 @@ export default async function RootLayout({
           />
         </MotionProvider>
         <AnalyticsRuntime />
+        {/* Switching language is a full page load (lang/dir change), so let
+            supporting browsers prerender the target page once the visitor
+            hovers or starts pressing a language option. English targets are
+            unprefixed and depend on the language cookie, so they are left out. */}
+        <script
+          type="speculationrules"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              prerender: [
+                { where: { selector_matches: 'a[hreflang]:not([hreflang="en"])' }, eagerness: 'moderate' },
+              ],
+            }),
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

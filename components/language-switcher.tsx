@@ -17,6 +17,24 @@ import { cn } from '@/lib/utils';
 
 const flags: Record<string, typeof GB> = { GB, ID, CN, JP, KR, SA, IN, ES, FR, DE, NL, BR, TR, RU };
 
+/*
+ * Warms a language page as soon as the visitor shows intent (hover, focus or
+ * touch), so the full page load that follows feels instant. Chrome and Edge
+ * also prerender these links via the speculation rules in the layout; this
+ * prefetch covers other browsers. English targets are unprefixed and depend
+ * on the language cookie, so they are never fetched ahead of the click.
+ */
+const warmed = new Set<string>();
+function warm(href: string, option: Locale) {
+  if (option === 'en' || warmed.has(href)) return;
+  warmed.add(href);
+  const link = document.createElement('link');
+  link.rel = 'prefetch';
+  link.href = href;
+  link.as = 'document';
+  document.head.appendChild(link);
+}
+
 /** Remembers the visitor's choice so unprefixed URLs open in that language. */
 function rememberLocale(locale: Locale) {
   document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=31536000; samesite=lax`;
@@ -75,10 +93,15 @@ export function LanguageSwitcher({
 
   const options = locales.map((option) => {
     const query = typeof window === 'undefined' ? '' : window.location.search;
+    const href = `${localizePath(option, basePath)}${query}`;
+    const prepare = option === locale ? undefined : () => warm(href, option);
     return (
       <li key={option}>
         <a
-          href={`${localizePath(option, basePath)}${query}`}
+          href={href}
+          onPointerEnter={prepare}
+          onFocus={prepare}
+          onTouchStart={prepare}
           hrefLang={localeMeta[option].htmlLang}
           lang={localeMeta[option].htmlLang}
           aria-current={option === locale ? 'true' : undefined}
