@@ -78,7 +78,7 @@ lib/assistant/       Nusa system prompt and offline fallback answers
 lib/business-profile.ts   Verified company details: team, WhatsApp number, etc.
 db/, drizzle/        Database schema and migrations
 scripts/             Image, map and icon generators
-middleware.ts        Language routing (English unprefixed, /en redirects, locale cookie)
+proxy.ts             Language routing (vinext proxy; named so Vercel does not treat it as its own Routing Middleware): (English unprefixed, /en redirects, locale cookie)
 ```
 
 ## Content and configuration

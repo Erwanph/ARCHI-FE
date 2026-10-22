@@ -9,7 +9,7 @@ import { LOCALE_COOKIE, defaultLocale, isLocale } from '@/lib/i18n/config';
  * A visitor who picked a language keeps it: the cookie redirects unprefixed
  * URLs to their language. Search engines (no cookie) always get English.
  */
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const [, first] = pathname.split('/');
 
